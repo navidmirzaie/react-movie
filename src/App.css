@@ -1,0 +1,15 @@
+.search-wrapper {
+  @apply flex mt-5 relative;
+}
+
+.search-input {
+  @apply  p-3 bg-gray-50 rounded flex-grow text-gray-700 rounded-2xl;
+}
+
+.search-input:focus {
+  @apply outline-0;
+}
+
+.search-button {
+  @apply bg-indigo-700 text-white text-sm p-3 rounded-2xl absolute right-0.5 top-0.5 w-28;
+}
