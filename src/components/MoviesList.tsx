@@ -1,6 +1,5 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import Movie from "./Movie";
-import Modal from  './Modal';
 import {MovieType} from "../Types/Movie";
 
 /*
@@ -18,8 +17,7 @@ import {MovieType} from "../Types/Movie";
 const MoviesList = () => {
 
     const [movies, setMovies] = useState<MovieType[]>([])
-    const [_, setMovie] = useState<MovieType | null>(null);
-    const dialogRef = useRef(null)
+    const [movie, setMovie] = useState<MovieType | null>(null);
 
     useEffect(() => {
         getMovies()
@@ -49,11 +47,6 @@ const MoviesList = () => {
                            onSelectMovie={onSelectMovie} />
                 ))
             }
-
-           {
-
-            }
-
         </>
     )
 }
