@@ -1,10 +1,9 @@
-import React, {ReactNode, useImperativeHandle, useRef, useState, forwardRef, ForwardedRef} from "react";
+import React, {ReactNode, useState, forwardRef, ForwardedRef} from "react";
 
 
 const Modal = forwardRef(function Modal(children:ReactNode, ref:ForwardedRef<HTMLDialogElement>) {
 
     const [open, setOpen] = useState(false);
-    const innerRef = useRef();
 
     const handleClose = () => {
         setOpen(false)
