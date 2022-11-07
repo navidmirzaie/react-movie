@@ -1,31 +1,27 @@
-import {MovieType} from "../Types/Movie";
-import Modal from "./Modal";
-import {useState} from "react";
+import {TMovie} from "../Types/Movie";
 
+const Movie = ({id, title, poster, releaseDate, voteAverage, backdrop}: TMovie) => {
 
-const Movie = (movie: MovieType) => {
+    const coverImage = `${process.env.REACT_APP_POSTERURL}/${poster}`;
 
-    const [showModal, setShowModal] = useState(false)
-
-    const coverImage = `${process.env.REACT_APP_POSTERURL}/${movie.poster_path}`;
-
-    const releaseDate = () => {
-        const parsedDate = Date.parse(movie.release_date);
+    const releasedDate = () => {
+        const parsedDate = Date.parse(releaseDate);
         return new Date(parsedDate).toLocaleString('nl-NL', {day: '2-digit', month:'2-digit', year:'2-digit'});
     }
 
-    function onShowModal() {
-        setShowModal(true)
+    function handleClick() {
+        const movie = { id, title, releaseDate, poster, voteAverage, backdrop };
+        return movie;
     }
 
     return (
         <>
-            <div className="flex rounded-b-md flex-col relative" id={movie.id.toString()} onClick={()=> movie.onSelectMovie!(movie)}>
+            <div className="flex rounded-b-md flex-col relative" id={id.toString()} onClick={handleClick}>
                 <div className="flex flex-col gap-2 hover:cursor-pointer w-[12rem]">
                     <img src={coverImage} className="rounded-md" loading="lazy" alt="" title=""/>
                     <div className="relative flex flex-col p-5">
-                        <h5 className="font-bold text-sm">{movie.title}</h5>
-                        <span className="text-xs">{releaseDate()}</span>
+                        <h5 className="font-bold text-sm">{title}</h5>
+                        <span className="text-xs">{releasedDate()}</span>
                     </div>
                 </div>
             </div>

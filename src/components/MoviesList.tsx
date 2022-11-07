@@ -1,50 +1,38 @@
 import {useEffect, useState} from "react";
+import {getMovies} from "../services/Movie-service";
+import {TMovie} from "../Types/Movie";
 import Movie from "./Movie";
-import {MovieType} from "../Types/Movie";
-
-/*
-  vraag: 1 - Hier wil ik een modal toevoegen met daarin <MovieDetail> maar ik krijg telkens een error.
-  In de <Modal> heb ik forwardRef gebruikt om vervolgens beschikking te hebben tot de Modal element.
-  Ik wil de Modal namelijk hier openen wanneer er op een film is geklikt (onSelectMovie).
-
-  vraag: 2 - Is Modal hier in deze component wel juist qua architectuur? hoort deze bijvoorbeeld niet in Movie component zelf?
-
-   <Modal ref={dialogRef}>
-       <MovieDetail id={} poster_path={} release_date={}/>
-   </Modal>
-*/
 
 const MoviesList = () => {
 
-    const [movies, setMovies] = useState<MovieType[]>([])
-    const [movie, setMovie] = useState<MovieType | null>(null);
+    const [movies, setMovies] = useState<TMovie[]>([])
+    const [movie, setMovie] = useState<TMovie | null>(null);
 
     useEffect(() => {
-        getMovies()
+        fetchMovies();
     },[])
 
-    async function getMovies() {
-        const endpoint = `${process.env.REACT_APP_APIURL}${process.env.REACT_APP_POPULAR}?api_key=${process.env.REACT_APP_APIKEY}`
-        const request = await fetch(endpoint);
-        const response = await request.json();
-
-        setMovies(response.results)
+    const fetchMovies = async () => {
+        const moviesData = await getMovies();
+        setMovies(moviesData);
     }
 
-     function onSelectMovie(movie: MovieType) {
+     function onSelectMovie(movie: TMovie) {
          setMovie(movie)
+
     }
 
     return (
         <>
             {
-                movies.map(({id, title, poster_path, release_date, vote_average }: MovieType) => (
+                movies.map(({id, title, poster, releaseDate, voteAverage, backdrop }) => (
                     <Movie id={id} title={title}
-                           poster_path={poster_path}
-                           release_date={release_date}
-                           vote_average={vote_average}
+                           poster={poster}
+                           releaseDate={releaseDate}
+                           voteAverage={voteAverage}
+                           backdrop={backdrop}
                            key={id}
-                           onSelectMovie={onSelectMovie} />
+                           onClick={onSelectMovie} />
                 ))
             }
         </>

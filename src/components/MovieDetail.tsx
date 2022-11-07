@@ -1,6 +1,13 @@
-const movieDetail = () => {
+import {TMovie} from "../Types/Movie";
+
+
+type TMovieDetailProps = {
+    movie: TMovie
+}
+
+const movieDetail = (props: TMovieDetailProps) => {
     return (
-        <h1>Movie detail</h1>
+        <h1>{props.movie.title}</h1>
     )
 }
 

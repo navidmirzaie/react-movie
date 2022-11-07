@@ -1,7 +1,11 @@
-import React, {ReactNode, useState, forwardRef, ForwardedRef} from "react";
+import React, {ReactNode, useState, forwardRef} from "react";
 
+type TModalProps = {
+    children: ReactNode
+}
 
-const Modal = forwardRef(function Modal(children:ReactNode, ref:ForwardedRef<HTMLDialogElement>) {
+const Modal = forwardRef<HTMLDialogElement, TModalProps>(function Modal(props, ref) {
+    const { children } = props
 
     const [open, setOpen] = useState(false);
 
@@ -11,10 +15,10 @@ const Modal = forwardRef(function Modal(children:ReactNode, ref:ForwardedRef<HTM
 
     return(
         <dialog ref={ref} open={open}
-            className="absolute border-none rounded-md drop-shadow-lg p-0
+                className="absolute border-none rounded-md drop-shadow-lg p-0
                 top-1/2 left-1/2 transform -translate-x-1/2
                 -translate-y-1/2 w-90 right-0 md:max-w-screen-md h-full lg:h-min"
-            id="movieDetailDialog">
+                id="movieDetailDialog">
             {children}
         </dialog>
     )
