@@ -19,7 +19,6 @@ const MoviesList = () => {
 
      function onSelectMovie(movie: TMovie) {
          setMovie(movie)
-
     }
 
     return (

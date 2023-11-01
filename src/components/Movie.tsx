@@ -1,8 +1,13 @@
 import {TMovie} from "../Types/Movie";
+import React, {useRef, useState} from "react";
+import Modal from "./Modal";
+import MovieDetail from "./MovieDetail";
 
 const Movie = ({id, title, poster, releaseDate, voteAverage, backdrop}: TMovie) => {
 
     const coverImage = `${process.env.REACT_APP_POSTERURL}/${poster}`;
+    const movieDialog = useRef<HTMLDialogElement>(null)
+    const [selectedMovie, setMovie] = useState<TMovie | null>(null);
 
     const releasedDate = () => {
         const parsedDate = Date.parse(releaseDate);
@@ -10,8 +15,9 @@ const Movie = ({id, title, poster, releaseDate, voteAverage, backdrop}: TMovie) 
     }
 
     function handleClick() {
-        const movie = { id, title, releaseDate, poster, voteAverage, backdrop };
-        return movie;
+        const selectedMovie = { id, title, releaseDate, poster, voteAverage, backdrop };
+        setMovie(selectedMovie);
+        movieDialog.current?.showModal();
     }
 
     return (
@@ -25,6 +31,9 @@ const Movie = ({id, title, poster, releaseDate, voteAverage, backdrop}: TMovie) 
                     </div>
                 </div>
             </div>
+            <Modal ref={movieDialog}>
+                <MovieDetail movie={selectedMovie}/>
+            </Modal>
         </>
     )
 }
